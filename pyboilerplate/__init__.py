@@ -8,9 +8,12 @@ from codecs import open
 from pyboilerplate._gitignore import get_gitignore_file
 from pyboilerplate._license import get_license_file
 from pyboilerplate._manifest import get_manifest_file
+from pyboilerplate._readme import get_readme_file
+from pyboilerplate._travis import get_travis_file
+from pyboilerplate._setup import get_setup_cfg_file
 
 
-def create_boilerplate(path_to_deploy_in):
+def create_boilerplate(path_to_deploy_in, project_name=''):
     if path_to_deploy_in is None:
         path_to_deploy_in = os.path.abspath(os.path.curdir)
     else:
@@ -18,8 +21,11 @@ def create_boilerplate(path_to_deploy_in):
 
     files = [
         get_gitignore_file(),
-        get_license_file(),
-        get_manifest_file()
+        get_license_file(project_name),
+        get_manifest_file(),
+        get_readme_file(project_name),
+        get_travis_file(project_name),
+        get_setup_cfg_file()
     ]
 
     # Create all files.
@@ -36,7 +42,8 @@ if __name__ == '__main__':
 
     import argparse
     parser = argparse.ArgumentParser("Python Boilerplate Creator")
-    parser.add_argument('path', nargs='?', type=str, default='.', help="Path to create boilerplate in.")
+    parser.add_argument('path', nargs='?', type=str, default='.',
+                        help="Path to create boilerplate in.")
     args = parser.parse_args()
 
     create_boilerplate(args.path)

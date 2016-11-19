@@ -2,7 +2,7 @@ import datetime
 import subprocess
 
 
-def get_license_file(project_name='', license_name='Kuk'):
+def get_license_file(project_name='', license_name='MIT'):
     """Get a LICENSE file. Default is MIT license.
 
     Args:
