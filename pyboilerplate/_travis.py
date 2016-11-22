@@ -1,14 +1,14 @@
-def get_travis_file(project_name=''):
+def get_travis_file(params):
     """Get a ``.travis.yml`` for Travis CI building.
 
     Args:
-        project_name (str): The name of this project.
+        params (dict): Parameters for this project.
 
     Returns:
         tuple: Relative file path and string content of file.
 
     """
-    return ".travis.yml", _content.format(project_name)
+    return ".travis.yml", _content.format(**params)
 
 
 _content = """language: python
@@ -36,7 +36,7 @@ install:
   - "pip install pytest-cov"
   - "pip install python-coveralls"
   - "pip install -e ."
-script: py.test tests/ --cov {0} --cov-report term-missing
+script: py.test tests/ --cov {project} --cov-report term-missing
 after_success:
   - coveralls
 

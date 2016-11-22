@@ -1,28 +1,29 @@
-def get_readme_file(project_name='', readme_format='rst'):
+def get_readme_file(params):
     """Get a rudimentary ``MANIFEST.in`` file.
 
     Args:
-        readme_format (str): `rst` for reStructured Text or `md` for Markdown.
+        params (dict): Parameters for this project.
 
     Returns:
         tuple: Relative file path and string content of file.
 
     """
-    if readme_format.lower() == 'md':
-        content = """"# {0}
+    if params.get('readme_format').lower() == 'md':
+        readme_format = params.get('readme_format').lower()
+        content = """"# {project}
 
         ## Description
 
         ## Installation
 
         ```
-        $ pip install git+https://www.github.com/hbldh/{0}
+        $ pip install git+https://{git_host}/{username}/{project}
         ```
 
         ## Usage
 
         ```python
-        import {0}
+        import {project}
         ```
 
         ## Testing
@@ -41,10 +42,10 @@ def get_readme_file(project_name='', readme_format='rst'):
 
         ## Documentation
 
-        """.format(project_name)
+        """.format(**params)
     else:
         readme_format = 'rst'
-        content = """{0}
+        content = """{project}
         =======================
 
         Description
@@ -55,14 +56,14 @@ def get_readme_file(project_name='', readme_format='rst'):
 
         .. code:: sh
 
-            $ pip install git+https://www.github.com/hbldh/{0}
+            $ pip install git+https://{git_host}/{username}/{project}
 
         Usage
         -----
 
         .. code:: python
 
-            import {0}
+            import {project}
 
         Testing
         -------
@@ -83,6 +84,6 @@ def get_readme_file(project_name='', readme_format='rst'):
         Documentation
         -------------
 
-        """.format(project_name)
+        """.format(**params)
 
     return 'README.' + readme_format, content

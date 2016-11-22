@@ -2,12 +2,13 @@
 from urllib import urlopen
 
 
-def get_gitignore_file(envs_to_include=None):
+def get_gitignore_file(params, envs_to_include=None):
     """Request a `.gitignore` from gitignore.io.
 
     Default: `jetbrains,linux,windows,visualstudiocode,sublimetext,python,c,c++`
 
     Args:
+        params (dict): Parameters for this project.
         envs_to_include (str): Operating Systems, IDEs and programming languages to add gitignore entries for.
 
     Returns:

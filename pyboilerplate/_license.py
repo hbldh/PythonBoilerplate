@@ -2,24 +2,19 @@ import datetime
 import subprocess
 
 
-def get_license_file(project_name='', license_name='MIT'):
+def get_license_file(params):
     """Get a LICENSE file. Default is MIT license.
 
     Args:
-        project_name (str): The name of this project.
+        params (dict): Parameters for this project.
         license_name (str): ``MIT``, ``APACHE2`` or ``GPLv3``.
 
     Returns:
         tuple: Relative file path and string content of file.
 
     """
-    deets = {
-        "project": project_name,
-        "year": datetime.datetime.now().year,
-        "fullname": subprocess.Popen(["git", "config", "user.name"], stdout=subprocess.PIPE).communicate()[0],
-        "email": subprocess.Popen(["git", "config", "user.email"], stdout=subprocess.PIPE).communicate()[0]
-    }
-    return 'LICENSE', _licenses.get(license_name, _licenses.get('MIT')).format(**deets)
+    license_name = params.get('license', 'MIT')
+    return 'LICENSE', _licenses.get(license_name, _licenses.get('MIT')).format(**params)
 
 
 _licenses = {
